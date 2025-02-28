@@ -1,6 +1,6 @@
 import { DynamicFrameLayout } from "@/components/ui/dynamic-frame-layout";
 import { Dock, DockIcon, DockItem, DockLabel } from "@/components/ui/dock";
-import { Activity, Component, HomeIcon, Mail, Package } from "lucide-react";
+import { Component, HomeIcon, Mail, Package, Star } from "lucide-react";
 import { Link } from "wouter";
 import { Waves } from "@/components/ui/waves-background";
 
@@ -16,14 +16,14 @@ const navigationItems = [
     href: "/projects",
   },
   {
-    title: "Components",
+    title: "Gallery",
     icon: <Component className="h-full w-full text-neutral-600 dark:text-neutral-300" />,
-    href: "/components",
+    href: "/gallery",
   },
   {
-    title: "Activity",
-    icon: <Activity className="h-full w-full text-neutral-600 dark:text-neutral-300" />,
-    href: "/activity",
+    title: "Reviews",
+    icon: <Star className="h-full w-full text-neutral-600 dark:text-neutral-300" />,
+    href: "/reviews",
   },
   {
     title: "Contact",
@@ -177,9 +177,9 @@ export default function ProjectsPage() {
 
       <div className="pt-24 px-8">
         <div className="w-full max-w-7xl mx-auto h-[calc(100vh-8rem)]">
-          <DynamicFrameLayout 
-            frames={demoFrames} 
-            className="w-full h-full" 
+          <DynamicFrameLayout
+            frames={demoFrames}
+            className="w-full h-full"
             hoverSize={6}
             gapSize={4}
           />
