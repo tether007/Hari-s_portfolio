@@ -1,5 +1,3 @@
-"use client";
-
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -12,15 +10,17 @@ type Testimonial = {
   src: string;
 };
 
+interface AnimatedTestimonialsProps {
+  testimonials: Testimonial[];
+  autoplay?: boolean;
+  className?: string;
+}
+
 export const AnimatedTestimonials = ({
   testimonials,
   autoplay = false,
   className,
-}: {
-  testimonials: Testimonial[];
-  autoplay?: boolean;
-  className?: string;
-}) => {
+}: AnimatedTestimonialsProps) => {
   const [active, setActive] = useState(0);
 
   const handleNext = () => {
@@ -113,13 +113,13 @@ export const AnimatedTestimonials = ({
               ease: "easeInOut",
             }}
           >
-            <h3 className="text-2xl font-bold text-foreground">
+            <h3 className="text-2xl font-bold text-white">
               {testimonials[active].name}
             </h3>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-neutral-400">
               {testimonials[active].designation}
             </p>
-            <motion.p className="text-lg text-muted-foreground mt-8">
+            <motion.p className="text-lg text-neutral-300 mt-8">
               {testimonials[active].quote.split(" ").map((word, index) => (
                 <motion.span
                   key={index}
@@ -148,15 +148,15 @@ export const AnimatedTestimonials = ({
           <div className="flex gap-4 pt-12 md:pt-0">
             <button
               onClick={handlePrev}
-              className="h-7 w-7 rounded-full bg-secondary flex items-center justify-center group/button"
+              className="h-7 w-7 rounded-full bg-neutral-800/50 flex items-center justify-center group/button"
             >
-              <IconArrowLeft className="h-5 w-5 text-foreground group-hover/button:rotate-12 transition-transform duration-300" />
+              <IconArrowLeft className="h-5 w-5 text-white group-hover/button:rotate-12 transition-transform duration-300" />
             </button>
             <button
               onClick={handleNext}
-              className="h-7 w-7 rounded-full bg-secondary flex items-center justify-center group/button"
+              className="h-7 w-7 rounded-full bg-neutral-800/50 flex items-center justify-center group/button"
             >
-              <IconArrowRight className="h-5 w-5 text-foreground group-hover/button:-rotate-12 transition-transform duration-300" />
+              <IconArrowRight className="h-5 w-5 text-white group-hover/button:-rotate-12 transition-transform duration-300" />
             </button>
           </div>
         </div>
