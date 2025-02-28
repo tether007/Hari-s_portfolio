@@ -16,7 +16,7 @@ const navigationItems = [
     href: "/projects",
   },
   {
-    title: "Components",
+    title: "Reviews",
     icon: <Component className="h-full w-full text-neutral-600 dark:text-neutral-300" />,
     href: "/components",
   },
@@ -177,9 +177,9 @@ export default function ProjectsPage() {
 
       <div className="pt-24 px-8">
         <div className="w-full max-w-7xl mx-auto h-[calc(100vh-8rem)]">
-          <DynamicFrameLayout 
-            frames={demoFrames} 
-            className="w-full h-full" 
+          <DynamicFrameLayout
+            frames={demoFrames}
+            className="w-full h-full"
             hoverSize={6}
             gapSize={4}
           />

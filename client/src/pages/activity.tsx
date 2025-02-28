@@ -1,4 +1,5 @@
 import { Waves } from "@/components/ui/waves-background";
+import { ThreeDPhotoCarousel } from "@/components/ui/3d-carousel";
 import { Dock, DockIcon, DockItem, DockLabel } from "@/components/ui/dock";
 import { Activity, Component, HomeIcon, Mail, Package } from "lucide-react";
 import { Link } from "wouter";
@@ -15,7 +16,7 @@ const navigationItems = [
     href: "/projects",
   },
   {
-    title: "Components",
+    title: "Reviews",
     icon: <Component className="h-full w-full text-neutral-600 dark:text-neutral-300" />,
     href: "/components",
   },
@@ -65,7 +66,7 @@ export default function ActivityPage() {
 
       <div className="container mx-auto px-4 pt-32">
         <h1 className="text-4xl font-bold text-white mb-8">Activity</h1>
-        <p className="text-gray-400">Recent activity feed coming soon...</p>
+        <ThreeDPhotoCarousel />
       </div>
     </div>
   );
