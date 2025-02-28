@@ -1,6 +1,6 @@
 "use client"
 
-import { memo, useEffect, useLayoutEffect, useMemo, useState } from "react"
+import { memo, useEffect, useLayoutEffect, useMemo, useState, useRef } from "react"
 import {
   AnimatePresence,
   motion,
@@ -8,9 +8,6 @@ import {
   useMotionValue,
   useTransform,
 } from "framer-motion"
-
-export const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? useLayoutEffect : useEffect
 
 type UseMediaQueryOptions = {
   defaultValue?: boolean
@@ -44,7 +41,7 @@ export function useMediaQuery(
     setMatches(getMatches(query))
   }
 
-  useIsomorphicLayoutEffect(() => {
+  useLayoutEffect(() => {
     const matchMedia = window.matchMedia(query)
     handleChange()
 
@@ -59,25 +56,90 @@ export function useMediaQuery(
 }
 
 const keywords = [
-  "night",
-  "city",
-  "sky",
-  "sunset",
-  "sunrise",
-  "winter",
-  "skyscraper",
-  "building",
-  "cityscape",
-  "architecture",
-  "street",
-  "lights",
-  "downtown",
-  "bridge",
+  "night", "city", "sky", "sunset", "sunrise", "winter",
+  "skyscraper", "building", "cityscape", "architecture",
+  "street", "lights", "downtown", "bridge",
 ]
 
-const duration = 0.25 // Increased duration for smoother transitions
+const duration = 0.25
 const transition = { duration, ease: [0.32, 0.72, 0, 1], filter: "blur(4px)" }
 const transitionOverlay = { duration: 0.75, ease: [0.32, 0.72, 0, 1] }
+
+interface ImageState {
+  loaded: boolean;
+  error: boolean;
+  src: string;
+}
+
+const LazyImage = memo(({ src, alt, className, layoutId }: { src: string, alt: string, className?: string, layoutId: string }) => {
+  const [imageState, setImageState] = useState<ImageState>({
+    loaded: false,
+    error: false,
+    src: `${src}&q=1&w=50&blur=50` // Start with tiny blurred version
+  });
+  const imgRef = useRef<HTMLImageElement>(null);
+  const observerRef = useRef<IntersectionObserver>();
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Load high quality image when in view
+            const highQualityImage = new Image();
+            highQualityImage.src = `${src}&q=60&w=300`;
+            highQualityImage.onload = () => {
+              setImageState(prev => ({
+                ...prev,
+                loaded: true,
+                src: highQualityImage.src
+              }));
+            };
+            highQualityImage.onerror = () => {
+              setImageState(prev => ({
+                ...prev,
+                error: true
+              }));
+            };
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        rootMargin: '50px',
+        threshold: 0.1
+      }
+    );
+
+    if (imgRef.current) {
+      observer.observe(imgRef.current);
+    }
+
+    observerRef.current = observer;
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, [src]);
+
+  return (
+    <motion.img
+      ref={imgRef}
+      src={imageState.src}
+      alt={alt}
+      layoutId={layoutId}
+      className={`${className} ${!imageState.loaded ? 'blur-sm' : 'blur-0'} transition-all duration-700`}
+      initial={{ filter: "blur(8px)", opacity: 0 }}
+      animate={{ 
+        filter: imageState.loaded ? "blur(0px)" : "blur(8px)",
+        opacity: 1 
+      }}
+      transition={transition}
+    />
+  );
+});
 
 const Carousel = memo(
   ({
@@ -122,17 +184,17 @@ const Carousel = memo(
           }}
           onDrag={(_, info) =>
             isCarouselActive &&
-            rotation.set(rotation.get() + info.offset.x * 0.02) // Reduced from 0.05
+            rotation.set(rotation.get() + info.offset.x * 0.02)
           }
           onDragEnd={(_, info) =>
             isCarouselActive &&
             controls.start({
-              rotateY: rotation.get() + info.velocity.x * 0.02, // Reduced from 0.05
+              rotateY: rotation.get() + info.velocity.x * 0.02,
               transition: {
                 type: "spring",
-                stiffness: 50, // Reduced from 100
-                damping: 20, // Reduced from 30
-                mass: 0.2, // Increased from 0.1
+                stiffness: 50,
+                damping: 20,
+                mass: 0.2,
               },
             })
           }
@@ -150,16 +212,11 @@ const Carousel = memo(
               }}
               onClick={() => handleClick(imgUrl, i)}
             >
-              <motion.img
-                src={`${imgUrl}&q=60&w=300`} // Reduced quality and width
+              <LazyImage
+                src={imgUrl}
                 alt={`keyword_${i} ${imgUrl}`}
-                loading="lazy"
                 layoutId={`img-${imgUrl}`}
                 className="pointer-events-none w-full rounded-xl object-cover aspect-square bg-neutral-900"
-                initial={{ filter: "blur(4px)" }}
-                layout="position"
-                animate={{ filter: "blur(0px)" }}
-                transition={transition}
               />
             </motion.div>
           ))}
@@ -177,10 +234,6 @@ function ThreeDPhotoCarousel() {
     () => keywords.map((keyword) => `https://picsum.photos/200/300?${keyword}`),
     []
   )
-
-  useEffect(() => {
-    console.log("Cards loaded:", cards)
-  }, [cards])
 
   const handleClick = (imgUrl: string) => {
     setActiveImg(imgUrl)
@@ -208,20 +261,11 @@ function ThreeDPhotoCarousel() {
             style={{ willChange: "opacity" }}
             transition={transitionOverlay}
           >
-            <motion.img
-              layoutId={`img-${activeImg}`}
+            <LazyImage
               src={activeImg}
+              alt="Selected image"
+              layoutId={`img-${activeImg}`}
               className="max-w-full max-h-full rounded-lg shadow-lg"
-              initial={{ scale: 0.5 }}
-              animate={{ scale: 1 }}
-              transition={{
-                delay: 0.5,
-                duration: 0.5,
-                ease: [0.25, 0.1, 0.25, 1],
-              }}
-              style={{
-                willChange: "transform",
-              }}
             />
           </motion.div>
         )}
