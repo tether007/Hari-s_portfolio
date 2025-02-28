@@ -6,7 +6,7 @@ import NotFound from "@/pages/not-found";
 import HomePage from "@/pages/home";
 import ProjectsPage from "@/pages/projects";
 import GalleryPage from "@/pages/gallery";
-import ReviewsPage from "@/pages/reviews";
+import ActivityPage from "@/pages/activity";
 import ContactPage from "@/pages/contact";
 
 function Router() {
@@ -15,7 +15,7 @@ function Router() {
       <Route path="/" component={HomePage} />
       <Route path="/projects" component={ProjectsPage} />
       <Route path="/gallery" component={GalleryPage} />
-      <Route path="/reviews" component={ReviewsPage} />
+      <Route path="/activity" component={ActivityPage} />
       <Route path="/contact" component={ContactPage} />
       <Route component={NotFound} />
     </Switch>

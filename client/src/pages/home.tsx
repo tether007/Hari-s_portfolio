@@ -1,6 +1,6 @@
 import { HeroGeometric } from "@/components/ui/shape-landing-hero";
 import { Dock, DockIcon, DockItem, DockLabel } from "@/components/ui/dock";
-import { Activity, Component, HomeIcon, Mail, Package, Star } from "lucide-react";
+import { Activity, Component, HomeIcon, Mail, Package } from "lucide-react";
 import { Link } from "wouter";
 import { Waves } from "@/components/ui/waves-background";
 
@@ -16,14 +16,14 @@ const navigationItems = [
     href: "/projects",
   },
   {
-    title: "Gallery",
+    title: "Components",
     icon: <Component className="h-full w-full text-neutral-600 dark:text-neutral-300" />,
-    href: "/gallery",
+    href: "/components",
   },
   {
-    title: "Reviews",
-    icon: <Star className="h-full w-full text-neutral-600 dark:text-neutral-300" />,
-    href: "/reviews",
+    title: "Activity",
+    icon: <Activity className="h-full w-full text-neutral-600 dark:text-neutral-300" />,
+    href: "/activity",
   },
   {
     title: "Contact",
@@ -64,7 +64,7 @@ export default function HomePage() {
         </div>
       </nav>
 
-      <HeroGeometric
+      <HeroGeometric 
         badge="Interactive Portfolio"
         title1="Creative"
         title2="Development Studio"

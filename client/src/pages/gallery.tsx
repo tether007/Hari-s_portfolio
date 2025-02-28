@@ -1,6 +1,6 @@
 import { Waves } from "@/components/ui/waves-background";
 import { Dock, DockIcon, DockItem, DockLabel } from "@/components/ui/dock";
-import { Component, HomeIcon, Mail, Package, Star } from "lucide-react";
+import { Activity, Component, HomeIcon, Mail, Package } from "lucide-react";
 import { Link } from "wouter";
 import { ThreeDPhotoCarousel } from "@/components/ui/3d-carousel";
 
@@ -21,9 +21,9 @@ const navigationItems = [
     href: "/gallery",
   },
   {
-    title: "Reviews",
-    icon: <Star className="h-full w-full text-neutral-600 dark:text-neutral-300" />,
-    href: "/reviews",
+    title: "Activity",
+    icon: <Activity className="h-full w-full text-neutral-600 dark:text-neutral-300" />,
+    href: "/activity",
   },
   {
     title: "Contact",

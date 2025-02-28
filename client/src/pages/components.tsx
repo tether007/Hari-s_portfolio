@@ -15,9 +15,9 @@ const navigationItems = [
     href: "/projects",
   },
   {
-    title: "Gallery",
+    title: "Components",
     icon: <Component className="h-full w-full text-neutral-600 dark:text-neutral-300" />,
-    href: "/gallery",
+    href: "/components",
   },
   {
     title: "Activity",
@@ -31,7 +31,7 @@ const navigationItems = [
   },
 ];
 
-export default function ContactPage() {
+export default function ComponentsPage() {
   return (
     <div className="relative min-h-screen bg-[#030303]">
       <Waves
@@ -64,8 +64,8 @@ export default function ContactPage() {
       </nav>
 
       <div className="container mx-auto px-4 pt-32">
-        <h1 className="text-4xl font-bold text-white mb-8">Contact</h1>
-        <p className="text-gray-400">Contact form coming soon...</p>
+        <h1 className="text-4xl font-bold text-white mb-8">Components</h1>
+        <p className="text-gray-400">Component showcase coming soon...</p>
       </div>
     </div>
   );
