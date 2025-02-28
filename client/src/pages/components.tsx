@@ -1,8 +1,7 @@
-import { HeroGeometric } from "@/components/ui/shape-landing-hero";
+import { Waves } from "@/components/ui/waves-background";
 import { Dock, DockIcon, DockItem, DockLabel } from "@/components/ui/dock";
 import { Activity, Component, HomeIcon, Mail, Package } from "lucide-react";
 import { Link } from "wouter";
-import { Waves } from "@/components/ui/waves-background";
 
 const navigationItems = [
   {
@@ -32,7 +31,7 @@ const navigationItems = [
   },
 ];
 
-export default function HomePage() {
+export default function ComponentsPage() {
   return (
     <div className="relative min-h-screen bg-[#030303]">
       <Waves
@@ -64,11 +63,10 @@ export default function HomePage() {
         </div>
       </nav>
 
-      <HeroGeometric 
-        badge="Interactive Portfolio"
-        title1="Creative"
-        title2="Development Studio"
-      />
+      <div className="container mx-auto px-4 pt-32">
+        <h1 className="text-4xl font-bold text-white mb-8">Components</h1>
+        <p className="text-gray-400">Component showcase coming soon...</p>
+      </div>
     </div>
   );
 }

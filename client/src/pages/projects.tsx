@@ -165,7 +165,7 @@ export default function ProjectsPage() {
           <Dock className="items-end pb-3">
             {navigationItems.map((item, idx) => (
               <Link key={idx} href={item.href}>
-                <DockItem className="aspect-square rounded-full bg-gray-200/10 backdrop-blur-sm dark:bg-neutral-800/10">
+                <DockItem className="aspect-square rounded-full bg-neutral-800/20 backdrop-blur-sm hover:bg-neutral-700/30">
                   <DockLabel>{item.title}</DockLabel>
                   <DockIcon>{item.icon}</DockIcon>
                 </DockItem>
