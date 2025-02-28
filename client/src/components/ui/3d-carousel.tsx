@@ -75,9 +75,9 @@ const keywords = [
   "bridge",
 ]
 
-const duration = 0.15
+const duration = 0.25 // Increased duration for smoother transitions
 const transition = { duration, ease: [0.32, 0.72, 0, 1], filter: "blur(4px)" }
-const transitionOverlay = { duration: 0.5, ease: [0.32, 0.72, 0, 1] }
+const transitionOverlay = { duration: 0.75, ease: [0.32, 0.72, 0, 1] }
 
 const Carousel = memo(
   ({
@@ -122,17 +122,17 @@ const Carousel = memo(
           }}
           onDrag={(_, info) =>
             isCarouselActive &&
-            rotation.set(rotation.get() + info.offset.x * 0.05)
+            rotation.set(rotation.get() + info.offset.x * 0.02) // Reduced from 0.05
           }
           onDragEnd={(_, info) =>
             isCarouselActive &&
             controls.start({
-              rotateY: rotation.get() + info.velocity.x * 0.05,
+              rotateY: rotation.get() + info.velocity.x * 0.02, // Reduced from 0.05
               transition: {
                 type: "spring",
-                stiffness: 100,
-                damping: 30,
-                mass: 0.1,
+                stiffness: 50, // Reduced from 100
+                damping: 20, // Reduced from 30
+                mass: 0.2, // Increased from 0.1
               },
             })
           }
@@ -151,10 +151,11 @@ const Carousel = memo(
               onClick={() => handleClick(imgUrl, i)}
             >
               <motion.img
-                src={imgUrl}
+                src={`${imgUrl}&q=60&w=300`} // Reduced quality and width
                 alt={`keyword_${i} ${imgUrl}`}
+                loading="lazy"
                 layoutId={`img-${imgUrl}`}
-                className="pointer-events-none w-full rounded-xl object-cover aspect-square"
+                className="pointer-events-none w-full rounded-xl object-cover aspect-square bg-neutral-900"
                 initial={{ filter: "blur(4px)" }}
                 layout="position"
                 animate={{ filter: "blur(0px)" }}
